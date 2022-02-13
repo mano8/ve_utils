@@ -1,88 +1,147 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import time
 
+
 class UType(object):
-    @staticmethod
-    def isStr(s):
-        """ Test if value is string type """
-        return (type(s) is str)
 
     @staticmethod
-    def isBool(s):
-        """ Test if value is Bool type """
-        return (type(s) is bool)
-    
-    @staticmethod
-    def isInt(s):
-        """ Test if value is Int type """
-        return (type(s) is int)
-    
-    @staticmethod
-    def isFloat(s):
-        """ Test if value is Float type """
-        return (type(s) is float)
-    
-    @staticmethod
-    def isNumeric(s):
-        """ Test if value is Numeric type """
-        if UType.isInt(s) or UType.isFloat(s):
-            return True
-        return False
-    
-    @staticmethod
-    def isDict(s):
-        """ Test if value is Dict type """
-        return (type(s) is dict)
+    def is_str(value):
+        """ 
+        Checks if the input is a str.
+
+        :param value: Input value to test.
+        :return: True if the value is a str, otherwise False.
+        """        
+        return (type(value) is str)
 
     @staticmethod
-    def isTuple(s):
-        """ Test if value is Tuple type """
-        return (type(s) is tuple)
+    def is_bool(value):
+        """ 
+        Checks if the input is a bool.
 
+        :param value: Input value to test.
+        :return: True if the value is a bool, otherwise False.
+        """   
+        return (type(value) is bool)
+    
     @staticmethod
-    def isList(s):
-        """ Test if value is List type """
-        return (type(s) is list)
+    def is_int(value):
+        """ 
+        Checks if the input is a int number.
 
-    @staticmethod
-    def getInt(nb, default = 0):
-        try:
-            return int(nb)
-        except Exception:
-            return default
-        return default
-    
-    @staticmethod
-    def getFloat(nb, default = 0.0):
-        try:
-            return float(nb)
-        except Exception:
-            return default
-        return default
-    
-    @staticmethod
-    def getRoundedFloat(nb, rnd, default = 0.0):
-        try:
-            nb = UType.getFloat(nb, default)
-            rnd = UType.getInt(rnd)
-            return round(nb, rnd)
-        except Exception:
-            return default
-        return default
-    
-    @staticmethod
-    def getStr(val, default = None):
+        :param value: Input value to test.
+        :return: True if the value is a int number, otherwise False.
         """
-        Format value to string.
+        return (type(value) is int)
+    
+    @staticmethod
+    def is_float(value):
+        """
+        Checks if the input is a float number.
 
-        Args:
-            val : The value to format
-            default (optional): If error occurs return default value. Defaults to None.
+        :param value: Input value to test.
+        :return: True if the value is a float number, otherwise False.
+        """
+        return (type(value) is float)
+    
+    @staticmethod
+    def is_numeric(value):
+        """
+        Checks if the input is a int number or a float number.
 
-        Returns:
-            str: Return string representation of value or default if any error occurs
+        :param value: Input value to test.
+        :return: True if the value is a int number or a float number, otherwise False.
+        """
+        return (UType.is_int(value) or UType.is_float(value))
+    
+    @staticmethod
+    def is_dict(value):
+        """
+        Checks if the input is a dict.
+
+        :param value: Input value to test.
+        :return: True if the value is a dict, otherwise False.
+        """
+        return (type(value) is dict)
+
+    @staticmethod
+    def is_tuple(value):
+        """
+        Checks if the input is a tuple.
+
+        :param value: Input value to test.
+        :return: True if the value is a Tuple, otherwise False.
+        """
+        return (type(value) is tuple)
+
+
+    @staticmethod
+    def is_list(value):
+        """
+        Checks if the given value is a list.
+
+        :param value: Input value to test.
+        :return: True if value is a list, and False otherwise.
+        """
+        return (type(value) is list)
+
+
+    @staticmethod
+    def get_int(value, default = 0):
+        """
+        Takes a value and returns it as an integer.
+
+        :param nb: Input value to return as an integer.
+        :param default=0: Used to set a default value for the variable 'nb' if it is not an integer.
+        :return: the integer part of the number that is passed to it, otherwise it returns the default value.
+        """
+        try:
+            return int(value)
+        except Exception:
+            return default
+        return default
+    
+    @staticmethod
+    def get_float(value, default = 0.0):
+        """
+        Takes a value and returns it as an float value.
+
+        :param value: Input value to return as an float.
+        :param default=0.0: Used to define the default value of the variable 'value' if it is not a float.
+        :return: a float if the argument is a number, otherwise it returns the default value.
+        """
+        try:
+            return float(value)
+        except Exception:
+            return default
+        return default
+    
+    @staticmethod
+    def get_rounded_float(nb, rnd, default = 0.0):
+        """
+        The getRoundedFloat function returns the rounded value of a float number.
+        
+        :param nb: Used to pass the value to be rounded.
+        :param rnd: Used to specify the number of digits after the comma.
+        :param default=0.0: Used to specify a default value for the 'rnd' parameter.
+        :return: the rounded float value of a number, otherwise it returns the default value.
+        """
+        try:
+            return round(UType.get_float(nb), rnd)
+        except Exception:
+            return default
+        return default
+    
+    
+    @staticmethod
+    def get_str(val, default = None):
+        """
+        Takes a value and returns it as an str value.
+
+        :param value: Input value to return as an str.
+        :param default=0.0: Used to define the default value of the variable 'value' if it is not a str.
+        :return: a str if the argument is a str, otherwise it returns the default value.
         """
         try:
             return str(val)
@@ -91,75 +150,83 @@ class UType(object):
         return default
     
     @staticmethod
-    def formatByType(val, data_type, float_round=None):
+    def format_by_type(value, data_type, float_round=None):
         """
-        Format value to data type format
+        Format value to data_type format
 
-        Args:
-            val: The value to format
-            data_type (str): The data type to format value
-            float_round (int, optional): When data type is float, value can be rounded from number of decimal places. Value must be (10, 100, 1000, ...). Defaults to None.
-
-        Returns:
-            Formatted value
+        :param value: Input value to format.
+        :param data_type: The data type to format the value.
+        :param float_round=None: When data type is float, value can be rounded from number of decimal places. Defaults to None.
+        :return: a formatted value, otherwise it returns None.
         """
         if data_type == "int":
-            return UType.getInt(val)
+            return UType.get_int(value)
         elif data_type == "float":
             if float_round is not None:
-                return UType.getRoundedFloat(UType.getFloat(val), float_round)
-            return UType.getFloat(val)
+                return UType.get_rounded_float(UType.get_float(value), float_round)
+            return UType.get_float(value)
         elif data_type == "onOff":
-            return UType.boolToOnOff(val)
+            return UType.bool_to_on_off(value)
         elif data_type == "intBool":
-            return UType.stringToIntBool(val)
+            return UType.string_to_int_bool(value)
         elif data_type == "bool":
-            return UType.strToBool(val)
+            return UType.str_to_bool(value)
         elif data_type == "str":
-            return UType.getStr(val)
+            return UType.get_str(value)
         elif data_type == "intString":
-            return UType.intToFormattedString(val)
-        return val
+            return UType.int_to_formatted_string(value)
+        return None
     
     @staticmethod
-    def isValidFormat(val, data_type, default = None):
+    def is_valid_format(value, data_type, default = None):
         """
-        Test if value type is valid. If type not reached return default.
-        Args:
-            val: The value to test
-            data_type (str): The data type to test
-            default (optional): If type not reached return default. Defaults to None.
+        Checks if input value is an data_type format
 
-        Returns:
-            bool: Return True if value data type test success or False. If type not reached return default
+        :param value: Input value to test the data type.
+        :param data_type: The data type to test format of the value.
+        :param default=None: Used to define the default value of the variable 'value' if it is not a valid data type.
+        :return: True if correct data type, False if not. Otherwise it returns default value, if no data type found.
         """
         if data_type == "int":
-            return UType.isInt(val)
+            return UType.is_int(value)
         elif data_type == "float":
-            return UType.isFloat(val)
+            return UType.is_float(value)
         elif data_type == "str":
-            return UType.isStr(val)
+            return UType.is_str(value)
         elif data_type == "bool":
-            return UType.isBool(UType.strToBool(val))
+            return UType.is_bool(UType.str_to_bool(value))
         elif data_type == "dict":
-            return UType.isDict(val)
+            return UType.is_dict(value)
         elif data_type == "list":
-            return UType.isList(val)
+            return UType.is_list(value)
         return default
     
     @staticmethod
-    def intToFormattedString(nb):
-        if UType.isInt(nb):
+    def int_to_formatted_string(nb):
+        """
+        Takes an integer and returns a string with the number formatted as two digits (if the number is less than 10).
+        
+        :param nb: Used to store the number that will be converted to a string.
+        :return: a string of the number nb formatted as a two digit number if it is less than 10 and greater or equal to 0, and returns an empty string otherwise.
+        """
+        if UType.is_int(nb):
             if nb < 10 and nb >= 0:
                 return "0%s"%(nb)
             return "%s"%(nb)
         return None
     
     @staticmethod
-    def strToBool(s, default=False):
-        if UType.isBool(s):  # do not convert if already a boolean
+    def str_to_bool(s, default=False):
+        """
+        Converts a string or an int to a boolean.
+        
+        :param s: Used to pass the value to be converted.
+        :param default=False: Used to set a default value for the parameter.
+        :return: True if the input is 'True', '1', or other boolean-like values.
+        """
+        if UType.is_bool(s):  # do not convert if already a boolean
             return s
-        elif UType.isStr(s):
+        elif UType.is_str(s):
             if s.lower() == 'true' \
                     or s == '1' \
                     or s.lower() == 'on' \
@@ -170,62 +237,92 @@ class UType(object):
                     or s.lower() == 'off' \
                     or s.lower() == 'error':
                 return False
-        elif UType.isInt(s):
+        elif UType.is_int(s):
             return s == 1
-        else:
-            if UType.isBool(default):  # do not convert if already a boolean
-                return default
-        return False
+        return default
     
     @staticmethod
-    def boolToIntText(boolT):
-        r = UType.strToBool(boolT)
-        if boolT:
+    def bool_to_int_text(value):
+        """
+        Takes a boolean value and returns an integer.
+        
+        :param value: Used to check if the input is a boolean value.
+        :return: the value of the value parameter.
+        """
+        if UType.str_to_bool(value):
             return "1"
         return "0"
     
     @staticmethod
-    def boolToOnOff(boolT):
-        r = UType.strToBool(boolT)
-        if boolT:
+    def bool_to_on_off(value):
+        """
+        Converts a boolean value to either 'on' or 'off'.
+        
+        :param value: Used to pass a value that is to be converted into a boolean.
+        :return: the string "on" if the value is True and returns the string "off" if it's False.
+        """
+        if UType.str_to_bool(value):
             return "On"
         return "Off"
 
     @staticmethod
-    def boolToStrState(boolT):
-        r = UType.strToBool(boolT)
-        if boolT:
+    def bool_to_str_state(value):
+        """
+        Takes a boolean value and returns the string "Ok" if True, or "Not Ok" if False.
+        
+        :param value: Used to determine if the state is 'Ok' or not.
+        :return: the boolean value of the string passed to it.
+        """
+        if UType.str_to_bool(value):
             return "Ok"
         return "Error"
 
     @staticmethod
-    def stringToIntBool(text, default=False):
-        r = UType.strToBool(text)
-        if r == True:
+    def string_to_int_bool(text):
+        """
+        Converts a string to an integer.
+        
+        :param text: Used to convert the string to a boolean value.
+        :return: the integer 1 if the string is true and 0 if the string is false.
+        """
+        if UType.str_to_bool(text):
             return 1
-        elif r == False:
+        else:
             return 0
-        return default
     
     @staticmethod
-    def stringToFloat(text, default=0.0):
-        if UType.isStr(text):
+    def string_to_float(text, default=0.0):
+        """
+        Converts a string to a float.
+        
+        :param text: Used to pass the string that is to be converted into a float.
+        :param default=0.0: Used to set a default value for the function.
+        :return: the float representation of the input text string.
+        """
+        if UType.is_str(text):
             try:
                 text = text.replace(',', '.')
-                return UType.getFloat(text)
+                return UType.get_float(text)
             except Exception:
                 return default
-        elif UType.isFloat(text):
+        elif UType.is_float(text):
             return text
         return default
     
     @staticmethod
-    def getKeysFromDict(data, list_keys):
+    def get_keys_from_dict(data, list_keys):
+        """
+        Returns a dictionary containing the keys from the input dictionary that are in the list of keys.
+        
+        :param data: Used to pass the dictionary to be searched.
+        :param list_keys: Used to specify the keys that we want to extract from the dictionary.
+        :return: the list of keys found in the dictionary data.
+        """
         res = dict()
-        if UType.isDict(data) and UType.isList(list_keys):
+        if UType.is_dict(data) and UType.is_list(list_keys):
 
             for key in list_keys:
-                if UType.isStr(key) and key in data:
+                if UType.is_str(key) and key in data:
                     res[key] = data.get(key)
         return res
 
@@ -233,7 +330,12 @@ class UType(object):
 class USys(object):
     
     @staticmethod
-    def getOperatingSystem():
+    def get_operating_system():
+        """
+        Returns the operating system of the computer running this code.
+        
+        :return: the name of the operating system (Linux, MacOs or Windows).
+        """
         try:
             import sys
             platform = sys.platform
@@ -248,7 +350,12 @@ class USys(object):
         return None
     
     @staticmethod
-    def getOperatingSystemType():
+    def get_operating_system_type():
+        """
+        Returns the operating system type.
+        
+        :return: the operating system type (unix or win32).
+        """
         try:
             op = USys.getOperatingSystem()
             if op == "Linux" or op == "MacOs":
@@ -260,25 +367,40 @@ class USys(object):
         return None
 
     @staticmethod
-    def isOpSysType(self, sys):
-        """ Test if is sys operating System Type """
+    def is_op_sys_type(sys):
+        """
+        Returns True if the operating system type is sys.
+        
+        :param sys: Used to determine the operating system type.
+        :return: True if the operating system type is equal to sys, and False otherwise.
+        """
         op_sys = USys.getOperatingSystemType()
         return op_sys is not None and op_sys[0] == sys
 
     @staticmethod
-    def isOpSys(self, sys):
-        """ Test if is win32 System """
+    def is_op_sys(sys):
+        """
+        Returns True if the operating system is sys, and False otherwise.
+        
+        :param sys: Used to determine which operating system is being used.
+        :return: True if the operating system is equal to sys, and False otherwise.
+        """
         op_sys = USys.getOperatingSystem()
         return op_sys is not None and op_sys == sys
+
 
 class UTime(object):
 
     @staticmethod
-    def timeToString(timeTf, micro=False):
+    def time_to_string(timeTf, micro=False):
         """
-            Format Timstamp unix to string
+        Converts a time in seconds to a string.
+        
+        :param timeTf: Used to convert the time in seconds to a string.
+        :param micro=False: Used to specify whether the microseconds should be included in the string.
+        :return: a string representation of the time passed, if it is not a float then it returns None.
         """
-        if UType.isFloat(timeTf):
+        if UType.is_float(timeTf):
             try:
                 import datetime
                 date_time = datetime.fromtimestamp(timeTf)
@@ -293,26 +415,29 @@ class UTime(object):
         return None
 
     @staticmethod
-    def getElapsedTime(tim, default=None):
+    def get_elapsed_time(tim, default=None):
         """
-        Get elapsed time from now
-        Args:
-            tim (Union[float, int]): The older timestamp
-            default (Union[float, int], optional): If invalid older time return default. Defaults to None.
-
-        Returns:
-            [float]: Return elapsed time
+        Returns the elapsed time between two timestamps.
+        
+        :param tim: Used to pass in the time that is being converted.
+        :param default=None: Used to specify a default value to return if the input is not an integer or float.
+        :return: the time if it's an integer or float, otherwise it returns default value.
         """
-        if UType.isInt(tim) or UType.isFloat(tim):
-            return time.time()-UType.getFloat(tim)
+        if UType.is_int(tim) or UType.is_float(tim):
+            return time.time()-UType.get_float(tim)
         return default
         
     @staticmethod
-    def stringToTime(text, formatF, default=None):
+    def string_to_time(text, formatF, default=None):
         """
-            Format Timstamp unix to string
+        Converts a string to a time object.
+        
+        :param text: Used to specify the string to be converted.
+        :param formatF: Used to specify the format of the string that is being converted to a time object.
+        :param default=None: Used to set a default value for the function.
+        :return: a time object converted from the given string and format.
         """
-        if UType.isStr(text) and UType.isStr(formatF):
+        if UType.is_str(text) and UType.is_str(formatF):
             try:
                 return time.mktime(time.strptime(text, formatF))
 
@@ -321,8 +446,16 @@ class UTime(object):
         return default
 
     @staticmethod
-    def getTimeSearch(timeB, timeSearch='23:59:59'):
-        if UType.isFloat(timeB):
+    def get_time_search(timeB, timeSearch='23:59:59'):
+        """
+        Returns the time in seconds from the beginning of epoch based on a given date and time.
+        
+        :param timeB: Used to pass the time in seconds since epoch.
+        :param timeSearch='23:59:59': Used to set the time to 23:59:59, so that all logs from that day are returned.
+        :return: the time search given the timeB.
+        :doc-author: Trelent
+        """
+        if UType.is_float(timeB):
             try:
                 sTime = time.gmtime(timeB)
                 return time.mktime(time.strptime(str(sTime[2])+'-'+str(sTime[1])+'-'+str(sTime[0])+' '+str(timeSearch), "%d-%m-%Y %H:%M:%S"))
