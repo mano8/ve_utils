@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import os
+import sys
 import time
-
+import datetime
 
 class UType(object):
 
@@ -327,8 +329,66 @@ class UType(object):
         return res
 
 
+def pipe_print(line):
+    print(line)
+
+
 class USys(object):
     
+    color_list = dict(
+        PURPLE='\033[95m',
+        BLUE='\033[94m',
+        GREEN='\033[92m',
+        YELLOW='\033[93m',
+        RED='\033[91m',
+        ENDLINE='\033[0m',
+        BOLD='\033[1m',
+        UNDERLINE='\033[4m'
+    )
+
+    ##################
+    #
+    # Shell properly displayed
+    #
+    #########
+    @classmethod
+    def get_text_to_print(cls, text_to_print, with_time=True):
+        if with_time: 
+            return "%s - %s"%(UTime.time_to_string(time.time()), text_to_print)
+        return text_to_print    
+        
+    @classmethod
+    def print_info(cls, text_to_print, with_time=True):
+        pipe_print(cls.color_list["BLUE"] + USys.get_text_to_print(text_to_print, with_time) + cls.color_list["ENDLINE"])
+
+    @classmethod
+    def print_success(cls, text_to_print, with_time=True):
+        pipe_print(cls.color_list["GREEN"] + USys.get_text_to_print(text_to_print, with_time) + cls.color_list["ENDLINE"])
+
+    @classmethod
+    def print_warning(cls, text_to_print, with_time=True):
+        pipe_print(cls.color_list["YELLOW"] + USys.get_text_to_print(text_to_print, with_time) + cls.color_list["ENDLINE"])
+
+    @classmethod
+    def print_danger(cls, text_to_print, with_time=True):
+        pipe_print(cls.color_list["RED"] + USys.get_text_to_print(text_to_print, with_time) + cls.color_list["ENDLINE"])
+
+    @classmethod
+    def print_header(cls, text_to_print, with_time=True):
+        pipe_print(cls.color_list["HEADER"] + USys.get_text_to_print(text_to_print, with_time) + cls.color_list["ENDLINE"])
+
+    @classmethod
+    def print_purple(cls, text_to_print, with_time=True):
+        pipe_print(cls.color_list["PURPLE"] + USys.get_text_to_print(text_to_print, with_time) + cls.color_list["ENDLINE"])
+
+    @classmethod
+    def print_bold(cls, text_to_print, with_time=True):
+        pipe_print(cls.color_list["BOLD"] + USys.get_text_to_print(text_to_print, with_time) + cls.color_list["ENDLINE"])
+
+    @classmethod
+    def print_underline(cls, text_to_print, with_time=True):
+        pipe_print(cls.color_list["UNDERLINE"] + USys.get_text_to_print(text_to_print, with_time) + cls.color_list["ENDLINE"])
+
     @staticmethod
     def get_operating_system():
         """
@@ -337,7 +397,6 @@ class USys(object):
         :return: the name of the operating system (Linux, MacOs or Windows).
         """
         try:
-            import sys
             platform = sys.platform
             if platform == "linux" or platform == "linux2":
                 return "Linux"
@@ -387,6 +446,28 @@ class USys(object):
         """
         op_sys = USys.getOperatingSystem()
         return op_sys is not None and op_sys == sys
+    
+    @staticmethod
+    def get_current_file_parent_parent_path(current_script_path):
+        """
+        Returns the parent of the parent directory of this file.
+        
+        :param current_script_path: Used to get the path of the current script.
+        :return: the parent of the parent of the current script's path.
+        """
+        parent_parent_path = os.path.normpath(current_script_path + os.sep + os.pardir + os.sep + os.pardir)
+        return parent_parent_path
+
+    @staticmethod
+    def get_current_file_parent_path(current_script_path):
+        """
+        Returns the parent path of the current file.
+        
+        :param current_script_path: Used to get the path of the current script.
+        :return: the parent path of the current script.
+        """
+        parent_path = os.path.normpath(current_script_path + os.sep + os.pardir)
+        return parent_path
 
 
 class UTime(object):
@@ -400,9 +481,8 @@ class UTime(object):
         :param micro=False: Used to specify whether the microseconds should be included in the string.
         :return: a string representation of the time passed, if it is not a float then it returns None.
         """
-        if UType.is_float(timeTf):
+        if UType.is_numeric(timeTf):
             try:
-                import datetime
                 date_time = datetime.fromtimestamp(timeTf)
                 if micro:
                     return date_time.strftime('%d/%m/%Y %H:%M:%S %f')
