@@ -56,6 +56,16 @@ class UType(object):
         :return: True if the value is a int number or a float number, otherwise False.
         """
         return (UType.is_int(value) or UType.is_float(value))
+
+    @staticmethod
+    def is_positive(value):
+        """
+        Checks if the input is a positive int number or a positive float number.
+
+        :param value: Input value to test.
+        :return: True if the value is a int number or a float number, otherwise False.
+        """
+        return (UType.is_int(value) or UType.is_float(value)) and UType.get_float(value) > 0
     
     @staticmethod
     def is_dict(value):
@@ -193,6 +203,8 @@ class UType(object):
             return UType.is_int(value)
         elif data_type == "float":
             return UType.is_float(value)
+        elif data_type == "positive":
+            return UType.is_positive(value)
         elif data_type == "str":
             return UType.is_str(value)
         elif data_type == "bool":
