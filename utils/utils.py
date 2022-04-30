@@ -55,7 +55,7 @@ class UType(object):
         :param value: Input value to test.
         :return: True if the value is a int number or a float number, otherwise False.
         """
-        return (UType.is_int(value) or UType.is_float(value))
+        return UType.is_int(value) or UType.is_float(value)
 
     @staticmethod
     def is_positive(value):
@@ -96,6 +96,16 @@ class UType(object):
         :return: True if the value is a dict, otherwise False.
         """
         return isinstance(value, dict) and len(value) > 0
+
+    @staticmethod
+    def is_dict_key(value):
+        """
+        Checks if the input is a valid dict key.
+
+        :param value: dict key to test.
+        :return: True if the value is a valid dict key, otherwise False.
+        """
+        return UType.is_int(value) or UType.is_str(value) or UType.is_tuple(value)
 
     @staticmethod
     def is_tuple(value):
@@ -357,6 +367,58 @@ class UType(object):
             return text
         return default
     
+    @staticmethod
+    def init_dict(data):
+        """
+        Returns an empty dictionary if data is not an instance of dict.
+        
+        :param data: Used to pass the property to initialyse.
+        :return: An empty dictionary if data is not an instance of dict.
+        """
+        if not UType.is_dict(data):
+            data = dict()
+        return data
+
+    @staticmethod
+    def init_dict_key(data, key, init_value):
+        """
+        Initialise the dictionary key value with init_value.
+        
+        If the dictionary key is not valid, raise ValueError.
+        Set key value to init_value if is not an instance of init_value type.
+
+        :param data: Used to pass the dictionary.
+        :param key: Used to pass the dictionary key.
+        :param init_value: Used to pass the default dictionary key value.
+        :return: data with key value initialysed to default value or
+                 the data param.
+        """
+        if not UType.is_dict_key(key):
+            raise ValueError(
+                "[init_dict_key] Error : dictionary key is not valid."
+                )
+
+        UType.init_dict(data)
+        if not isinstance(data.get(key), type(init_value)):
+            data[key] = init_value
+        return data
+
+    @staticmethod
+    def get_keys_from_dict(data, list_keys):
+        """
+        Returns a dictionary containing the keys from the input dictionary that are in the list of keys.
+        
+        :param data: Used to pass the dictionary to be searched.
+        :param list_keys: Used to specify the keys that we want to extract from the dictionary.
+        :return: the list of keys found in the dictionary data.
+        """
+        res = dict()
+        if UType.is_dict(data) and UType.is_list(list_keys):
+            for key in list_keys:
+                if UType.is_str(key) and key in data:
+                    res[key] = data.get(key)
+        return res
+
     @staticmethod
     def get_keys_from_dict(data, list_keys):
         """
