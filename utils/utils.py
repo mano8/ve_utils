@@ -15,7 +15,7 @@ class UType(object):
         :param value: Input value to test.
         :return: True if the value is a str, otherwise False.
         """        
-        return (type(value) is str)
+        return isinstance(value, str)
 
     @staticmethod
     def is_bool(value):
@@ -25,7 +25,7 @@ class UType(object):
         :param value: Input value to test.
         :return: True if the value is a bool, otherwise False.
         """   
-        return (type(value) is bool)
+        return isinstance(value, bool)
     
     @staticmethod
     def is_int(value):
@@ -35,7 +35,7 @@ class UType(object):
         :param value: Input value to test.
         :return: True if the value is a int number, otherwise False.
         """
-        return (type(value) is int)
+        return isinstance(value, int)
     
     @staticmethod
     def is_float(value):
@@ -45,7 +45,7 @@ class UType(object):
         :param value: Input value to test.
         :return: True if the value is a float number, otherwise False.
         """
-        return (type(value) is float)
+        return isinstance(value, float)
     
     @staticmethod
     def is_numeric(value):
@@ -65,7 +65,17 @@ class UType(object):
         :param value: Input value to test.
         :return: True if the value is a int number or a float number, otherwise False.
         """
-        return (UType.is_int(value) or UType.is_float(value)) and UType.get_float(value) > 0
+        return UType.is_numeric(value) and UType.get_float(value) > 0
+    
+    staticmethod
+    def is_negative(value):
+        """
+        Checks if the input is a negative int number or a negative float number.
+
+        :param value: Input value to test.
+        :return: True if the value is a int number or a float number, otherwise False.
+        """
+        return UType.is_numeric(value) and UType.get_float(value) < 0
     
     @staticmethod
     def is_dict(value):
@@ -75,7 +85,17 @@ class UType(object):
         :param value: Input value to test.
         :return: True if the value is a dict, otherwise False.
         """
-        return (type(value) is dict)
+        return isinstance(value, dict)
+    
+    @staticmethod
+    def is_dict_not_empty(value):
+        """
+        Checks if the input is an not empty dict.
+
+        :param value: Input value to test.
+        :return: True if the value is a dict, otherwise False.
+        """
+        return isinstance(value, dict) and len(value) > 0
 
     @staticmethod
     def is_tuple(value):
@@ -85,7 +105,7 @@ class UType(object):
         :param value: Input value to test.
         :return: True if the value is a Tuple, otherwise False.
         """
-        return (type(value) is tuple)
+        return isinstance(value, tuple)
 
 
     @staticmethod
@@ -96,7 +116,17 @@ class UType(object):
         :param value: Input value to test.
         :return: True if value is a list, and False otherwise.
         """
-        return (type(value) is list)
+        return isinstance(value, list)
+    
+    @staticmethod
+    def is_list_not_empty(value):
+        """
+        Checks if the given value is an not empty list.
+
+        :param value: Input value to test.
+        :return: True if value is a list, and False otherwise.
+        """
+        return isinstance(value, list) and len(value) > 0
 
 
     @staticmethod
@@ -173,7 +203,7 @@ class UType(object):
         """
         if data_type == "int":
             return UType.get_int(value)
-        elif data_type == "float":
+        elif data_type in ["float", "numeric", "positive", "negative", "time"]:
             if float_round is not None:
                 return UType.get_rounded_float(UType.get_float(value), float_round)
             return UType.get_float(value)
@@ -203,8 +233,12 @@ class UType(object):
             return UType.is_int(value)
         elif data_type == "float":
             return UType.is_float(value)
+        elif data_type == "numeric":
+            return UType.is_numeric(value)
         elif data_type == "positive":
             return UType.is_positive(value)
+        elif data_type == "negative":
+            return UType.is_negative(value)
         elif data_type == "str":
             return UType.is_str(value)
         elif data_type == "bool":
@@ -334,7 +368,6 @@ class UType(object):
         """
         res = dict()
         if UType.is_dict(data) and UType.is_list(list_keys):
-
             for key in list_keys:
                 if UType.is_str(key) and key in data:
                     res[key] = data.get(key)
