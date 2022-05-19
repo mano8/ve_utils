@@ -1,6 +1,6 @@
 import unittest
 import time
-from utils import UType as U, UTime as Utime, USys as Usys
+from utils.utils import UType as U, UTime as Utime, USys as Usys
 
 class TestUtils(unittest.TestCase):
 

@@ -630,7 +630,7 @@ class USys(object):
         :return: the operating system type (unix or win32).
         """
         try:
-            op = USys.getOperatingSystem()
+            op = USys.get_operating_system()
             if op == "Linux" or op == "MacOs":
                 return ("unix", op)
             elif op == "Windows":
@@ -649,7 +649,7 @@ class USys(object):
             True if the operating system type is equal to sys,
             and False otherwise.
         """
-        op_sys = USys.getOperatingSystemType()
+        op_sys = USys.get_operating_system_type()
         return op_sys is not None and op_sys[0] == sys
 
     @staticmethod
@@ -662,7 +662,7 @@ class USys(object):
             True if the operating system is equal to sys,
             and False otherwise.
         """
-        op_sys = USys.getOperatingSystem()
+        op_sys = USys.get_operating_system()
         return op_sys is not None and op_sys == sys
 
     @staticmethod
