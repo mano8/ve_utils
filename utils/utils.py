@@ -610,17 +610,16 @@ class USys(object):
 
         :return: the name of the operating system (Linux, MacOs or Windows).
         """
-        try:
-            platform = sys.platform
-            if platform == "linux" or platform == "linux2":
-                return "Linux"
-            elif platform == "darwin":
-                return "MacOs"
-            elif platform == "win32":
-                return "Windows"
-        except Exception:
-            return None
-        return None
+        
+        platform = sys.platform
+        if platform.startswith('linux') or platform.startswith('cygwin'):
+            return "Linux"
+        elif platform.startswith('darwin'):
+            return "MacOs"
+        elif platform.startswith('win'):
+            return "Windows"
+        else:
+            raise EnvironmentError('Unsupported platform')
 
     @staticmethod
     def get_operating_system_type() -> str or None:
