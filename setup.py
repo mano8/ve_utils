@@ -1,12 +1,28 @@
+import pathlib
 from setuptools import setup
 
-setup(name='utils',
-      version='0.1',
-      description='Utilities helper module for Python',
+# The directory containing this file
+HERE = pathlib.Path(__file__).parent
+
+# The text of the README file
+README = (HERE / "README.md").read_text()
+
+setup(name='ve_utils',
+      version='1.0.0',
+      description='Utilities helper library for Python',
+      long_description=README,
+      long_description_content_type="text/markdown",
       url='https://github.com/mano8/utils',
       author='Eli Serra',
       author_email='eli.serra173@gmail.com',
       license='MIT',
+      classifiers=[
+            "License :: OSI Approved :: MIT License",
+            "Programming Language :: Python :: 3",
+            "Programming Language :: Python :: 3.7",
+      ],
       packages=['utils'],
+      include_package_data=True,
       install_requires=[],
-      zip_safe=False)
+      zip_safe=False
+      )
