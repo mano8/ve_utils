@@ -3,7 +3,7 @@
 import os
 import sys
 import time
-import datetime
+from datetime import datetime
 
 
 class UType(object):
@@ -716,7 +716,7 @@ class UTime(object):
                 else:
                     return date_time.strftime('%d/%m/%Y %H:%M:%S')
 
-            except Exception:
+            except Exception as ex:
                 return None
 
         return None
