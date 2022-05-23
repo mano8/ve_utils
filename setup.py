@@ -23,6 +23,6 @@ setup(name='ve_utils',
       ],
       packages=['utils'],
       include_package_data=True,
-      install_requires=[],
+      install_requires=['pytest'],
       zip_safe=False
       )
