@@ -3,6 +3,11 @@ This is a Python utilities library helper. Contain methods shared by multiple re
 
 # Installation
 
+#### Install from PyPi :
+You can install the ve_utils helper from PyPI:
+
+``python -m pip install ve_utils``
+
 #### Install from github repository :
 Open Git bash or install it from [here](https://git-scm.com/downloads).
 
