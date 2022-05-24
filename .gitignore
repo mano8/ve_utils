@@ -4,4 +4,3 @@
 *.egg
 utils.egg-info/*
 build/*
-dist/*
