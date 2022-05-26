@@ -1,6 +1,10 @@
+.gitignore
 LICENSE
 README.md
 setup.py
+dist/ve_utils-1.0.0-py3-none-any.whl
+dist/ve_utils-1.0.0.tar.gz
+test/__init__.py
 test/test_usys.py
 test/test_utime.py
 test/test_utype.py
