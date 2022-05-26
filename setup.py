@@ -7,12 +7,12 @@ HERE = pathlib.Path(__file__).parent
 # The text of the README file
 README = (HERE / "README.md").read_text()
 
-setup(name='ve-utils',
-      version='1.1.0',
+setup(name='ve_utils',
+      version='1.1.1',
       description='Utilities helper library for Python',
       long_description=README,
       long_description_content_type="text/markdown",
-      url='https://github.com/mano8/ve-utils',
+      url='https://github.com/mano8/ve_utils',
       author='Eli Serra',
       author_email='eli.serra173@gmail.com',
       license='MIT',
@@ -21,7 +21,7 @@ setup(name='ve-utils',
             "Programming Language :: Python :: 3",
             "Programming Language :: Python :: 3.7",
       ],
-      packages=['utils'],
+      packages=['ve_utils'],
       include_package_data=True,
       install_requires=['pytest'],
       zip_safe=False

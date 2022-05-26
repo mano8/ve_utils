@@ -1,5 +1,5 @@
 import pytest
-from utils.utils import UType as U
+from ve_utils.utils import UType as U
 
 class TestUtils():
 

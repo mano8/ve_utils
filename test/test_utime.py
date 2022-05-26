@@ -1,7 +1,7 @@
 import pytest
 import time
-from utils.utils import UType as U
-from utils.utils import UTime
+from ve_utils.utils import UType as U
+from ve_utils.utils import UTime
 
 class TestUtils():
 

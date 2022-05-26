@@ -1,7 +1,7 @@
 import pytest
 import time
-from utils.utils import UType as U
-from utils.utils import USys as USys
+from ve_utils.utils import UType as U
+from ve_utils.utils import USys as USys
 
 class TestUSys():    
     
