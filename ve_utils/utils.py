@@ -237,7 +237,7 @@ class UType(object):
         elif data_type in ["float", "numeric", "positive", "negative", "time"]:
             if float_round is not None:
                 return UType.get_rounded_float(
-                    UType.get_float(value),
+                    value,
                     float_round
                     )
             return UType.get_float(value)
