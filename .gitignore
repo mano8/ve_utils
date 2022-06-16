@@ -2,5 +2,7 @@
 *.pyc
 *.vscode
 *.egg
-utils.egg-info/*
-build/*
+/build/*
+/.vscode/*
+/.pytest_cache/*
+/.idea/*
