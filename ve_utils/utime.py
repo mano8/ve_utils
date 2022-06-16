@@ -20,6 +20,23 @@ class UTime:
     """Time Helper methods."""
 
     @staticmethod
+    def get_timestamp_from_datetime(
+            date_time: datetime
+    ) -> float:
+        """Get timestamp from datetime object"""
+        if isinstance(date_time, datetime):
+            return datetime.timestamp(date_time)
+        return None
+
+    @staticmethod
+    def get_utc_timestamp(timestamp: int or float) -> float:
+        """Get timestamp from datetime object"""
+        if UType.is_numeric(timestamp, not_null=True):
+            return UTime.get_timestamp_from_datetime(
+                datetime.utcfromtimestamp(timestamp)
+            )
+
+    @staticmethod
     def time_to_string(
                         timestamp: int or float,
                         micro: bool = False
