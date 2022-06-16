@@ -5,6 +5,7 @@ UTime unittest class.
 Use pytest package.
 """
 import time
+from datetime import datetime
 from ve_utils.utype import UType as Ut
 from ve_utils.utime import UTime
 
@@ -14,7 +15,7 @@ class TestUTime:
     def test_get_timestamp_from_datetime(self):
         """Test get_timestamp_from_datetime method"""
         assert UTime.get_timestamp_from_datetime(None) is None
-        assert Ut.isFloat(UTime.get_timestamp_from_datetime(None))
+        assert Ut.is_float(UTime.get_timestamp_from_datetime(datetime.now()))
 
     def test_time_to_string(self):
         """Test time_to_string method"""
