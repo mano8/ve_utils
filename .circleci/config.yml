@@ -24,9 +24,9 @@ jobs:
     steps:
       - checkout
       - run:
-          name: view current directory
+          name: change timezone
           # This assumes pytest is installed via the install-package step above
-          command: ls -l
+          command: timedatectl set-timezone Europe/Madrid
       - python/install-packages:
           pkg-manager: pip
       - run:
