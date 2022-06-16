@@ -533,7 +533,7 @@ class UType:
         """
         Convert a string or an int to a boolean.
 
-        
+
         :param s: Used to pass the value to be converted.
         :param default: Used to set a default value for the parameter.
         :return:
