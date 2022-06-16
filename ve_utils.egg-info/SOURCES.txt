@@ -8,7 +8,9 @@ test/test_usys.py
 test/test_utime.py
 test/test_utype.py
 ve_utils/__init__.py
-ve_utils/utils.py
+ve_utils/usys.py
+ve_utils/utime.py
+ve_utils/utype.py
 ve_utils.egg-info/PKG-INFO
 ve_utils.egg-info/SOURCES.txt
 ve_utils.egg-info/dependency_links.txt
