@@ -12,7 +12,7 @@ You can install the ve_utils helper from PyPI:
 
 ``pip install ve_utils``
 
-#### Install from github repository :
+#### Install from GitHub repository :
 To install directly from GitHub:
 
 ``$ python3 -m pip install "git+https://github.com/mano8/ve_utils"``
@@ -21,15 +21,16 @@ To install directly from GitHub:
 
 First you need import one of the utils package egg :
 
-``from ve_utils.utils import UType as U``
+``from ve_utils.utils import UType as Ut``
 
-Now, for example if you need to test if variable contain an non empty list you can use :
+Now, for example you can use is_list method as fallow:
 
-    > my_var = [ 0, 1 ,2 ,3 ]
-    > U.is_list_not_empty(my_var)
-    > True
-    > my_var = 2
-    > U.is_list_not_empty(my_var)
-    > False 
-
-The ``is_list_not_empty`` method is the same of using ``isinstance(my_var, list) and len(my_var) > 0``.
+    $> my_var = [ 0, 1 ,2 ,3 ]
+    $> Ut.is_list(my_var, not_null=True)
+    $> True
+    $> Ut.is_list(my_var, min_items=5)
+    $> False
+    $> Ut.is_list(my_var, max_items=2)
+    $> False 
+    $> Ut.is_list([], not_null=True)
+    $> False 
