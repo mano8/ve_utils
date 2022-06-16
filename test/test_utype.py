@@ -1,10 +1,15 @@
+# -*- coding: utf-8 -*-
+"""
+UType unittest class.
 
+Use pytest package.
+"""
 import pytest
 from ve_utils.utype import UType as Ut
 
 
-class TestUtils:
-
+class TestUType:
+    """UTime unittest class."""
     def test_has_valid_length(self):
         """Test has_valid_length method"""
         assert Ut.has_valid_length(test=True, value='tst')
@@ -215,6 +220,7 @@ class TestUtils:
         """Test is_valid_format method"""
         with pytest.raises(AttributeError):
             Ut.is_valid_format({}, data_type="bad data type")
+        assert Ut.is_list(Ut.get_valid_data_types_test())
 
     def test_get_int(self):
         """Test get_int method"""
@@ -237,6 +243,7 @@ class TestUtils:
         assert Ut.get_rounded_float("hello", 1, 0.156) == 0.0
         assert Ut.get_rounded_float(0.1665616, 3) == 0.167
         assert Ut.get_rounded_float("bg", 2, 2.589898) == 0.0
+        assert Ut.get_rounded_float(None, dict(), None) is None
 
     def test_get_str(self):
         """Test get_str method"""
@@ -246,7 +253,10 @@ class TestUtils:
     
     def test_format_by_type(self):
         """Test format_by_type method"""
+        assert Ut.format_by_type("32", 'int') == 32
+        assert Ut.format_by_type("32", 'float') == 32.0
         assert Ut.format_by_type(32, 'str') == '32'
+        assert Ut.format_by_type(1, 'bool') is True
         assert Ut.format_by_type(True, 'onOff') == 'On'
         assert Ut.format_by_type(False, 'onOff') == 'Off'
         assert Ut.format_by_type(True, 'intBool') == 1
@@ -254,6 +264,8 @@ class TestUtils:
         assert Ut.format_by_type(1.25698789, 'float', 3) == 1.257
         assert Ut.format_by_type(8, 'intString') == "08"
         assert Ut.format_by_type(10, 'intString') == "10"
+        with pytest.raises(AttributeError):
+            Ut.format_by_type({}, data_type="bad data type")
 
     def test_int_to_formatted_string(self):
         """Test int_to_formatted_string method"""
@@ -278,6 +290,7 @@ class TestUtils:
         assert not Ut.str_to_bool("Error")
         assert not Ut.str_to_bool(0)
         assert not Ut.str_to_bool(False)
+        assert Ut.str_to_bool(None, None) is None
 
     def test_bool_to_int_text(self):
         """Test bool_to_int_text method"""
@@ -303,6 +316,8 @@ class TestUtils:
         """Test string_to_float method"""
         assert Ut.string_to_float('0,125') == 0.125
         assert Ut.string_to_float('0.125') == 0.125
+        assert Ut.string_to_float(0.125) == 0.125
+        assert Ut.string_to_float(None, None) is None
 
     def test_init_dict(self):
         """Test init_dict method"""
@@ -313,6 +328,8 @@ class TestUtils:
         """Test init_dict_key method"""
         assert Ut.init_dict_key(dict(), 'my_key', list()) == {'my_key': list()}
         assert Ut.init_dict_key(dict(), 'my_key', dict()) == {'my_key': dict()}
+        with pytest.raises(ValueError):
+            assert Ut.init_dict_key(dict(), None, dict())
 
     def test_get_items_from_dict(self):
         """Test init_dict_key method"""
