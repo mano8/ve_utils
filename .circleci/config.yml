@@ -23,6 +23,10 @@ jobs:
     executor: my-executor
     steps:
       - checkout
+      - run:
+          name: view current directory
+          # This assumes pytest is installed via the install-package step above
+          command: ls -l
       - python/install-packages:
           pkg-manager: pip
       - run:
@@ -33,10 +37,6 @@ jobs:
           name: Install coverage
           # This assumes pytest is installed via the install-package step above
           command: pip install coverage
-      - run:
-          name: view current directory
-          # This assumes pytest is installed via the install-package step above
-          command: ls -l
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
