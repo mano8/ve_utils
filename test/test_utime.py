@@ -1,18 +1,18 @@
-import pytest
 import time
-from ve_utils.utils import UType as U
-from ve_utils.utils import UTime
+from ve_utils.utype import UType as Ut
+from ve_utils.utime import UTime
 
-class TestUtils():
 
-    def test_get_elapsed_time(self):
-        """"""
-        assert UTime.get_elapsed_time(32) <= U.get_int(time.time()+32)
-    
+class TestUTime:
+
     def test_time_to_string(self):
         """"""
         assert UTime.time_to_string(1630193115.6428988) == '29/08/2021 01:25:15'
         assert UTime.time_to_string(1630193115.6428988, True) == '29/08/2021 01:25:15 642899'
+
+    def test_get_elapsed_time(self):
+        """"""
+        assert UTime.get_elapsed_time(32) <= Ut.get_int(time.time() + 32)
 
     def test_string_to_time(self):
         """"""
