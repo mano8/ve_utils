@@ -21,12 +21,18 @@ class TestUTime:
 
     def test_string_to_time(self):
         """"""
-        assert UTime.get_utc_timestamp(
-            UTime.string_to_time('29/08/2021', '%d/%m/%Y')
-        ) == 1630180800.0
+        assert Ut.is_float(
+            UTime.get_utc_timestamp(
+                UTime.string_to_time('29/08/2021', '%d/%m/%Y')
+            ),
+            not_null=True
+        )
     
     def test_get_time_search(self):
         """"""
-        assert UTime.get_utc_timestamp(
-            UTime.get_time_search(1630188000.0, '10:12:58')
-        ) == 1630131178.0
+        assert Ut.is_float(
+            UTime.get_utc_timestamp(
+                UTime.get_time_search(1630188000.0, '10:12:58')
+            ),
+            not_null=True
+        )
