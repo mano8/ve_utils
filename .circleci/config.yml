@@ -23,10 +23,6 @@ jobs:
     executor: my-executor
     steps:
       - checkout
-      - run:
-          name: change timezone
-          # This assumes pytest is installed via the install-package step above
-          command: timedatectl set-timezone Europe/Madrid
       - python/install-packages:
           pkg-manager: pip
       - run:
