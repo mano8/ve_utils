@@ -91,6 +91,8 @@ class UType:
     def has_valid_value(test: bool,
                         value: any,
                         not_null: bool = False,
+                        positive: bool = False,
+                        negative: bool = False,
                         mini: int = None,
                         maxi: int = None,
                         eq: int = None,
@@ -107,6 +109,8 @@ class UType:
         :param test: the result of test from caller method,
         :param value: input value tested
         :param not_null: if True, input value can't be null, False by default
+        :param positive: if True, input value must be positive, False by default
+        :param negative: if True, input value must be negative, False by default
         :param mini: Min value of input
             must be bigger or equal than 0,
             and smaller or equal than maxi
@@ -126,14 +130,17 @@ class UType:
         if (eq is not None
                 and (maxi is not None
                      or mini is not None
-                     or not_null is True)) \
+                     or not_null is True
+                     or positive is True
+                     or negative is True)) \
                 or (mini is not None
                     and maxi is not None
                     and maxi < mini):
             raise AttributeError(
                 "[UType::%s::has_valid_value] Fatal error : "
                 "Unable to validate the value of input, "
-                "if eq value is provided you can't provide not_null, mini or maxi values. "
+                "if eq value is provided : "
+                "you can't provide not_null, positive, negative, mini or maxi values. "
                 "Or maxi value is bigger than mini value. "
                 "not_null: %s - eq: %s - mini: %s - maxi: %s " %
                 (UType.get_str(source), not_null, eq, mini, maxi)
@@ -142,6 +149,10 @@ class UType:
         return test \
             and (not not_null
                  or (not_null and value != 0)) \
+            and (not positive
+                 or (positive and value > 0)) \
+            and (not negative
+                 or (negative and value < 0)) \
             and (eq is None
                  or value == eq) \
             and (mini is None
@@ -198,6 +209,8 @@ class UType:
     @staticmethod
     def is_int(value: any,
                not_null: bool = False,
+               positive: bool = False,
+               negative: bool = False,
                mini: int or None = None,
                maxi: int or None = None,
                eq: int = None
@@ -212,6 +225,8 @@ class UType:
             - > False
         :param value: Input value to test
         :param not_null: if True, input value can't be null, False by default
+        :param positive: if True, input value must be positive, False by default
+        :param negative: if True, input value must be negative, False by default
         :param mini: Min value of input
         :param maxi: Max value of input
         :param eq: equal value of input
@@ -220,6 +235,8 @@ class UType:
         return UType.has_valid_value(test=isinstance(value, int),
                                      value=value,
                                      not_null=not_null,
+                                     positive=positive,
+                                     negative=negative,
                                      mini=mini,
                                      maxi=maxi,
                                      eq=eq,
@@ -228,6 +245,8 @@ class UType:
     @staticmethod
     def is_float(value: any,
                  not_null: bool = False,
+                 positive: bool = False,
+                 negative: bool = False,
                  mini: int or None = None,
                  maxi: int or None = None,
                  eq: int = None
@@ -242,6 +261,8 @@ class UType:
             - > False
         :param value: Input value to test
         :param not_null: if True, input value can't be null, False by default
+        :param positive: if True, input value must be positive, False by default
+        :param negative: if True, input value must be negative, False by default
         :param mini: Min value of input
         :param maxi: Max value of input
         :param eq: equal value of input
@@ -250,6 +271,8 @@ class UType:
         return UType.has_valid_value(test=isinstance(value, float),
                                      value=value,
                                      not_null=not_null,
+                                     positive=positive,
+                                     negative=negative,
                                      mini=mini,
                                      maxi=maxi,
                                      eq=eq,
@@ -258,6 +281,8 @@ class UType:
     @staticmethod
     def is_numeric(value: any,
                    not_null: bool = False,
+                   positive: bool = False,
+                   negative: bool = False,
                    mini: int or None = None,
                    maxi: int or None = None,
                    eq: int = None
@@ -272,14 +297,27 @@ class UType:
             - > True
         :param value: Input value to test
         :param not_null: if True, input value can't be null, False by default
+        :param positive: if True, input value must be positive, False by default
+        :param negative: if True, input value must be negative, False by default
         :param mini: Min value of input
         :param maxi: Max value of input
         :param eq: equal value of input
         :return: True if the given value is an int or float instance,
                  otherwise False.
         """
-        return UType.is_int(value, not_null=not_null, mini=mini, maxi=maxi, eq=eq)\
-            or UType.is_float(value, not_null=not_null, mini=mini, maxi=maxi, eq=eq)
+        return UType.is_int(value,
+                            not_null=not_null,
+                            positive=positive,
+                            negative=negative,
+                            mini=mini, maxi=maxi,
+                            eq=eq)\
+            or UType.is_float(value,
+                              not_null=not_null,
+                              positive=positive,
+                              negative=negative,
+                              mini=mini,
+                              maxi=maxi,
+                              eq=eq)
 
     @staticmethod
     def is_dict(value: any,
@@ -429,6 +467,8 @@ class UType:
     def is_valid_format(value: any,
                         data_type: str or type,
                         not_null: bool = False,
+                        positive: bool = False,
+                        negative: bool = False,
                         mini: int or None = None,
                         maxi: int or None = None,
                         eq: int = None
@@ -439,6 +479,10 @@ class UType:
         :param value: Input value to test the data type
         :param data_type: The data type to test format of the value
         :param not_null: if True, input value can't be null, False by default
+        :param positive: if True, input value must be positive, False by default
+            Only for numeric values
+        :param negative: if True, input value must be negative, False by default
+            Only for numeric values
         :param mini: Min length or value
         :param maxi: Max length or value
         :param eq: equal length of input value
@@ -456,18 +500,24 @@ class UType:
         elif data_type == "int" or data_type == int:
             return UType.is_int(value,
                                 not_null=not_null,
+                                positive=positive,
+                                negative=negative,
                                 mini=mini,
                                 maxi=maxi,
                                 eq=eq)
         elif data_type == "float" or data_type == float:
             return UType.is_float(value,
                                   not_null=not_null,
+                                  positive=positive,
+                                  negative=negative,
                                   mini=mini,
                                   maxi=maxi,
                                   eq=eq)
         elif data_type == "numeric":
             return UType.is_numeric(value,
                                     not_null=not_null,
+                                    positive=positive,
+                                    negative=negative,
                                     mini=mini,
                                     maxi=maxi,
                                     eq=eq)

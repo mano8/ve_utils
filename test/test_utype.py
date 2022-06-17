@@ -48,10 +48,17 @@ class TestUType:
         assert Ut.has_valid_value(test=True, value=1, mini=1, maxi=3)
         assert Ut.has_valid_value(test=True, value=3, mini=3, maxi=3)
         assert Ut.has_valid_value(test=True, value=3, eq=3)
+        assert Ut.has_valid_value(test=True, value=3, positive=True)
+        assert Ut.has_valid_value(test=True, value=-3, negative=True)
 
         assert not Ut.has_valid_value(test=True, value=0, not_null=True)
         assert not Ut.has_valid_value(test=True, value=-1, mini=1)
         assert not Ut.has_valid_value(test=True, value=2, maxi=1)
+        assert not Ut.has_valid_value(test=True, value=2, eq=1)
+        assert not Ut.has_valid_value(test=True, value=0, positive=True)
+        assert not Ut.has_valid_value(test=True, value=-1, positive=True)
+        assert not Ut.has_valid_value(test=True, value=0, negative=True)
+        assert not Ut.has_valid_value(test=True, value=2, negative=True)
         assert not Ut.has_valid_value(test=False, value=1)
 
         with pytest.raises(AttributeError):
