@@ -4,4 +4,4 @@ __deprecated__ = False
 __license__ = "MIT"
 __status__ = "Production"
 # Version of realpython-reader package
-__version__ = "2.2.0"
+__version__ = "2.3.0"
