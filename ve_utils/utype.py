@@ -26,6 +26,7 @@ class UType:
                          not_null: bool = False,
                          mini: int = None,
                          maxi: int = None,
+                         eq: int = None,
                          source: str = 'void'
                          ) -> bool:
         """
@@ -47,6 +48,7 @@ class UType:
             must be bigger or equal than 0,
             and bigger than mini
             (None by default)
+        :param eq: equal length of input value
         :param source: source of call (method name).
         :return: True if the test is True and the given value has valid length,
                  otherwise False.
@@ -55,6 +57,7 @@ class UType:
             And length of value can't be determined.
         """
         if (mini is not None and mini < 0) \
+                or (eq is not None and eq < 0) \
                 or (maxi is not None and maxi <= 0) \
                 or (mini is not None
                     and maxi is not None
@@ -62,9 +65,9 @@ class UType:
             raise AttributeError(
                 "[UType::%s::has_valid_length] Fatal error : "
                 "Unable to validate the value length, "
-                "mini and/or maxi are not valid." 
-                "mini: %s - maxi: %s " %
-                (UType.get_str(source), mini, maxi)
+                "eq  and/or mini and/or maxi are not valid."
+                "eq: %s - mini: %s - maxi: %s " %
+                (UType.get_str(source), eq, mini, maxi)
             )
 
         if not test:
@@ -75,16 +78,85 @@ class UType:
             val_len = len(value)
             return (not not_null
                     or (not_null and val_len > 0))\
+                and (eq is None
+                     or val_len == eq)\
                 and (mini is None
+                     or eq is not None
                      or 0 <= mini <= val_len) \
                 and (maxi is None
+                     or eq is not None
                      or 0 < maxi >= val_len)
+
+    @staticmethod
+    def has_valid_value(test: bool,
+                        value: any,
+                        not_null: bool = False,
+                        mini: int = None,
+                        maxi: int = None,
+                        eq: int = None,
+                        source: str = 'void'
+                        ) -> bool:
+        """
+        Helper used in type test methods, to validate the numeric value.
+
+        :Example :
+            - $> value = 5
+            - $> UType.has_valid_value(test=isinstance(value, int), eq=5)
+            - $> True
+
+        :param test: the result of test from caller method,
+        :param value: input value tested
+        :param not_null: if True, input value can't be null, False by default
+        :param mini: Min value of input
+            must be bigger or equal than 0,
+            and smaller or equal than maxi
+            (None by default)
+        :param maxi: Max value of input
+            must be bigger or equal than 0,
+            and bigger than mini
+            (None by default)
+        :param eq: equal value of input
+        :param source: source of call (method name).
+        :return: True if the test is True and the given value has valid length,
+                 otherwise False.
+        :raises AttributeError: if the mini and or maxi values are not valid
+        :raises TypeError: If the test value is True
+            And length of value can't be determined.
+        """
+        if (eq is not None
+                and (maxi is not None
+                     or mini is not None
+                     or not_null is True)) \
+                or (mini is not None
+                    and maxi is not None
+                    and maxi < mini):
+            raise AttributeError(
+                "[UType::%s::has_valid_value] Fatal error : "
+                "Unable to validate the value of input, "
+                "if eq value is provided you can't provide not_null, mini or maxi values. "
+                "Or maxi value is bigger than mini value. "
+                "not_null: %s - eq: %s - mini: %s - maxi: %s " %
+                (UType.get_str(source), not_null, eq, mini, maxi)
+            )
+
+        return test \
+            and (not not_null
+                 or (not_null and value != 0)) \
+            and (eq is None
+                 or value == eq) \
+            and (mini is None
+                 or eq is not None
+                 or mini <= value) \
+            and (maxi is None
+                 or eq is not None
+                 or maxi >= value)
 
     @staticmethod
     def is_str(value: any,
                not_null: bool = False,
                mini: int or None = None,
-               maxi: int or None = None
+               maxi: int or None = None,
+               eq: int = None
                ) -> bool:
         """
         Check if the given value is a str instance.
@@ -97,6 +169,7 @@ class UType:
         :param not_null: if True, input value can't be null, False by default
         :param mini: Min length value
         :param maxi: Max length value
+        :param eq: equal length of input value
         :return: True if the given value is a str instance, otherwise False.
         """
         return UType.has_valid_length(test=isinstance(value, str),
@@ -104,6 +177,7 @@ class UType:
                                       not_null=not_null,
                                       mini=mini,
                                       maxi=maxi,
+                                      eq=eq,
                                       source='is_str')
 
     @staticmethod
@@ -125,7 +199,8 @@ class UType:
     def is_int(value: any,
                not_null: bool = False,
                mini: int or None = None,
-               maxi: int or None = None
+               maxi: int or None = None,
+               eq: int = None
                ) -> bool:
         """
         Check if the given value is an int instance.
@@ -137,23 +212,25 @@ class UType:
             - > False
         :param value: Input value to test
         :param not_null: if True, input value can't be null, False by default
-        :param mini: Min value
-        :param maxi: Max value
+        :param mini: Min value of input
+        :param maxi: Max value of input
+        :param eq: equal value of input
         :return: True if the given value is an int instance, otherwise False.
         """
-        return isinstance(value, int)\
-            and (not not_null
-                 or (not_null and value != 0)) \
-            and (mini is None
-                 or mini <= value) \
-            and (maxi is None
-                 or maxi >= value)
+        return UType.has_valid_value(test=isinstance(value, int),
+                                     value=value,
+                                     not_null=not_null,
+                                     mini=mini,
+                                     maxi=maxi,
+                                     eq=eq,
+                                     source='is_int')
 
     @staticmethod
     def is_float(value: any,
                  not_null: bool = False,
                  mini: int or None = None,
-                 maxi: int or None = None
+                 maxi: int or None = None,
+                 eq: int = None
                  ) -> bool:
         """
         Check if the given value is a float instance.
@@ -165,23 +242,25 @@ class UType:
             - > False
         :param value: Input value to test
         :param not_null: if True, input value can't be null, False by default
-        :param mini: Min value
-        :param maxi: Max value
+        :param mini: Min value of input
+        :param maxi: Max value of input
+        :param eq: equal value of input
         :return: True if the given value is a float instance, otherwise False.
         """
-        return isinstance(value, float)\
-            and (not not_null
-                 or (not_null and value != 0)) \
-            and (mini is None
-                 or mini <= value) \
-            and (maxi is None
-                 or maxi >= value)
+        return UType.has_valid_value(test=isinstance(value, float),
+                                     value=value,
+                                     not_null=not_null,
+                                     mini=mini,
+                                     maxi=maxi,
+                                     eq=eq,
+                                     source='is_float')
 
     @staticmethod
     def is_numeric(value: any,
                    not_null: bool = False,
                    mini: int or None = None,
-                   maxi: int or None = None
+                   maxi: int or None = None,
+                   eq: int = None
                    ) -> bool:
         """
         Check if the given value is an int or float instance.
@@ -193,19 +272,21 @@ class UType:
             - > True
         :param value: Input value to test
         :param not_null: if True, input value can't be null, False by default
-        :param mini: Min value
-        :param maxi: Max value
+        :param mini: Min value of input
+        :param maxi: Max value of input
+        :param eq: equal value of input
         :return: True if the given value is an int or float instance,
                  otherwise False.
         """
-        return UType.is_int(value, not_null=not_null, mini=mini, maxi=maxi)\
-            or UType.is_float(value, not_null=not_null, mini=mini, maxi=maxi)
+        return UType.is_int(value, not_null=not_null, mini=mini, maxi=maxi, eq=eq)\
+            or UType.is_float(value, not_null=not_null, mini=mini, maxi=maxi, eq=eq)
 
     @staticmethod
     def is_dict(value: any,
                 not_null: bool = False,
                 min_items: int or None = None,
-                max_items: int or None = None
+                max_items: int or None = None,
+                eq: int = None
                 ) -> bool:
         """
         Check if the given value is a dict instance.
@@ -217,6 +298,7 @@ class UType:
         :param not_null: if True, input value can't be null, False by default
         :param min_items: Min dict items
         :param max_items: Max dict items
+        :param eq: equal length of input value
         :return: True if the given value is a dict instance, otherwise False.
         """
         return UType.has_valid_length(test=isinstance(value, dict),
@@ -224,13 +306,15 @@ class UType:
                                       not_null=not_null,
                                       mini=min_items,
                                       maxi=max_items,
+                                      eq=eq,
                                       source='is_dict')
 
     @staticmethod
     def is_dict_key(value: any,
                     not_null: bool = False,
                     mini: int or None = None,
-                    maxi: int or None = None
+                    maxi: int or None = None,
+                    eq: int = None
                     ) -> bool:
         """
         Check if the given value is a valid dict key.
@@ -240,22 +324,31 @@ class UType:
         :param not_null: if True, input value can't be null, False by default
         :param mini: Min value
         :param maxi: Max value
+        :param eq: equal length of input value
         :return: True if the given value is a valid dict key, otherwise False.
         """
         return UType.is_int(value=value,
                             not_null=not_null,
                             mini=mini,
-                            maxi=maxi) or\
+                            maxi=maxi,
+                            eq=eq) or\
             UType.is_str(value,
                          not_null=True,
                          mini=mini,
-                         maxi=maxi) or\
-            UType.is_tuple(value)
+                         maxi=maxi,
+                         eq=eq) or\
+            UType.is_tuple(value=value,
+                           not_null=not_null,
+                           min_items=mini,
+                           max_items=maxi,
+                           eq=eq)
 
     @staticmethod
     def is_str_dict_key(value: any,
                         mini: int or None = None,
-                        maxi: int or None = None) -> bool:
+                        maxi: int or None = None,
+                        eq: int = None
+                        ) -> bool:
         """
         Check if the given value is a valid string dict key.
 
@@ -263,18 +356,22 @@ class UType:
         :param value: dict key to test
         :param mini: Min value length
         :param maxi: Max value length
+        :param eq: equal length of input value
         :return: True if the given value is a valid dict key, otherwise False.
         """
         return UType.is_str(value=value,
                             not_null=True,
                             mini=mini,
-                            maxi=maxi)
+                            maxi=maxi,
+                            eq=eq)
 
     @staticmethod
     def is_tuple(value: any,
                  not_null: bool = False,
                  min_items: int or None = None,
-                 max_items: int or None = None) -> bool:
+                 max_items: int or None = None,
+                 eq: int = None
+                 ) -> bool:
         """
         Check if the given value is a tuple instance.
 
@@ -282,6 +379,7 @@ class UType:
         :param not_null: if True, input value can't be null, False by default
         :param min_items: Min tuple items
         :param max_items: Max tuple items
+        :param eq: equal length of input value
         :return: True if the given value is a tuple instance, otherwise False.
         """
         return UType.has_valid_length(test=isinstance(value, tuple),
@@ -289,13 +387,16 @@ class UType:
                                       not_null=not_null,
                                       mini=min_items,
                                       maxi=max_items,
+                                      eq=eq,
                                       source='is_tuple')
 
     @staticmethod
     def is_list(value: any,
                 not_null: bool = False,
                 min_items: int or None = None,
-                max_items: int or None = None) -> bool:
+                max_items: int or None = None,
+                eq: int = None
+                ) -> bool:
         """
         Check if the given value is a list instance.
 
@@ -303,6 +404,7 @@ class UType:
         :param not_null: if True, input value can't be null, False by default
         :param min_items: Min list items
         :param max_items: Max list items
+        :param eq: equal length of input value
         :return: True if the given value is a list instance, otherwise False.
         """
         return UType.has_valid_length(test=isinstance(value, list),
@@ -310,6 +412,7 @@ class UType:
                                       not_null=not_null,
                                       mini=min_items,
                                       maxi=max_items,
+                                      eq=eq,
                                       source='is_list')
 
     @staticmethod
@@ -327,7 +430,8 @@ class UType:
                         data_type: str or type,
                         not_null: bool = False,
                         mini: int or None = None,
-                        maxi: int or None = None
+                        maxi: int or None = None,
+                        eq: int = None
                         ) -> bool or None:
         """
         Check if input value is a data_type format
@@ -337,6 +441,7 @@ class UType:
         :param not_null: if True, input value can't be null, False by default
         :param mini: Min length or value
         :param maxi: Max length or value
+        :param eq: equal length of input value
         :return: True if correct data type, False if not.
                  Otherwise, it returns default value, if no data type found.
         """
@@ -344,39 +449,46 @@ class UType:
             return UType.is_str(value=value,
                                 not_null=not_null,
                                 mini=mini,
-                                maxi=maxi)
+                                maxi=maxi,
+                                eq=eq)
         elif data_type == "bool" or data_type == bool:
             return UType.is_bool(value)
         elif data_type == "int" or data_type == int:
             return UType.is_int(value,
                                 not_null=not_null,
                                 mini=mini,
-                                maxi=maxi)
+                                maxi=maxi,
+                                eq=eq)
         elif data_type == "float" or data_type == float:
             return UType.is_float(value,
                                   not_null=not_null,
                                   mini=mini,
-                                  maxi=maxi)
+                                  maxi=maxi,
+                                  eq=eq)
         elif data_type == "numeric":
             return UType.is_numeric(value,
                                     not_null=not_null,
                                     mini=mini,
-                                    maxi=maxi)
+                                    maxi=maxi,
+                                    eq=eq)
         elif data_type == "dict" or data_type == dict:
             return UType.is_dict(value,
                                  not_null=not_null,
                                  min_items=mini,
-                                 max_items=maxi)
+                                 max_items=maxi,
+                                 eq=eq)
         elif data_type == "tuple" or data_type == tuple:
             return UType.is_tuple(value,
                                   not_null=not_null,
                                   min_items=mini,
-                                  max_items=maxi)
+                                  max_items=maxi,
+                                  eq=eq)
         elif data_type == "list" or data_type == list:
             return UType.is_list(value,
                                  not_null=not_null,
                                  min_items=mini,
-                                 max_items=maxi)
+                                 max_items=maxi,
+                                 eq=eq)
         raise AttributeError(
             "[UType::is_valid_format] Fatal error : "
             "Bad data_type value, "

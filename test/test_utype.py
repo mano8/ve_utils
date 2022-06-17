@@ -16,6 +16,7 @@ class TestUType:
         assert Ut.has_valid_length(test=True, value='tst', not_null=True)
         assert Ut.has_valid_length(test=True, value='tst', mini=1, maxi=3)
         assert Ut.has_valid_length(test=True, value='tst', mini=3, maxi=3)
+        assert Ut.has_valid_length(test=True, value='tst', eq=3, mini=4, maxi=6)
 
         assert not Ut.has_valid_length(test=True, value='', not_null=True)
         assert not Ut.has_valid_length(test=True, value='', mini=1)
@@ -34,8 +35,45 @@ class TestUType:
         with pytest.raises(AttributeError):
             Ut.has_valid_length(test=False, value='tst', mini=5, maxi=2)
 
+        with pytest.raises(AttributeError):
+            Ut.has_valid_length(test=False, value='tst', eq=-1)
+
         with pytest.raises(TypeError):
             assert Ut.has_valid_length(test=True, value=None, not_null=True)
+
+    def test_has_valid_value(self):
+        """Test has_valid_value method"""
+        assert Ut.has_valid_value(test=True, value=1)
+        assert Ut.has_valid_value(test=True, value=-2, not_null=True)
+        assert Ut.has_valid_value(test=True, value=1, mini=1, maxi=3)
+        assert Ut.has_valid_value(test=True, value=3, mini=3, maxi=3)
+        assert Ut.has_valid_value(test=True, value=3, eq=3)
+
+        assert not Ut.has_valid_value(test=True, value=0, not_null=True)
+        assert not Ut.has_valid_value(test=True, value=-1, mini=1)
+        assert not Ut.has_valid_value(test=True, value=2, maxi=1)
+        assert not Ut.has_valid_value(test=False, value=1)
+
+        with pytest.raises(AttributeError):
+            Ut.has_valid_value(test=True, value=3, eq=3, mini=-1, maxi=2)
+
+        with pytest.raises(AttributeError):
+            Ut.has_valid_value(test=False, value=3, eq=3, maxi=2)
+
+        with pytest.raises(AttributeError):
+            Ut.has_valid_value(test=False, value=3, eq=3, mini=2)
+
+        with pytest.raises(AttributeError):
+            Ut.has_valid_value(test=False, value=3, eq=-3, not_null=True)
+
+        with pytest.raises(AttributeError):
+            Ut.has_valid_value(test=False, value=3, mini=5, maxi=2)
+
+        with pytest.raises(TypeError):
+            Ut.has_valid_value(test=True, value='tst', mini=-1)
+
+        with pytest.raises(TypeError):
+            assert Ut.has_valid_value(test=True, value=None, maxi=2)
 
     def test_is_str(self):
         """Test is_str method"""
