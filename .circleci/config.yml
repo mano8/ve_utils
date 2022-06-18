@@ -30,13 +30,9 @@ jobs:
           # This assumes pytest is installed via the install-package step above
           command: pip install --upgrade pip
       - run:
-          name: Install ve_utils
+          name: Install ve_utils[TEST] extras_require
           # This assumes pytest is installed via the install-package step above
-          command: pip install ve_utils
-      - run:
-          name: Install coverage
-          # This assumes pytest is installed via the install-package step above
-          command: pip install coverage
+          command: pip install ve_utils[TEST]
       - run:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
