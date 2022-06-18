@@ -1,0 +1,7 @@
+{
+  "key1": "my value",
+  "key2": ["array_value_1", "array_value_2"],
+  "key3": false,
+  "key4": 10,
+  "key5": 0.0258001
+}
