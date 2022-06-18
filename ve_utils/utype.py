@@ -14,10 +14,7 @@ __version__ = "2.0.0"
 
 class UType:
     """
-    Test Helper used to test and format data.
-
-    Contain only static methods.
-
+    Helper class of static methods, used to test and format data, and some extra helper utilities.
     """
 
     @staticmethod

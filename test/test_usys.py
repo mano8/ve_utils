@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+"""
+USys unittest class.
+
+Use pytest package.
+"""
 import os
 import inspect
 from ve_utils.utype import UType as Ut
@@ -5,7 +11,7 @@ from ve_utils.usys import USys as USys
 
 
 class TestUSys:
-
+    """USys unittest class."""
     def test_prints(self):
         """Test prints method"""
         print('\n Print tests : \n')
