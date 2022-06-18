@@ -8,7 +8,7 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 
 setup(name='ve_utils',
-      version='2.4.0',
+      version='2.5.0',
       description='Utilities helper library for Python',
       long_description=README,
       long_description_content_type="text/markdown",
@@ -23,6 +23,11 @@ setup(name='ve_utils',
       ],
       packages=['ve_utils'],
       include_package_data=True,
-      install_requires=['pytest'],
+      python_requires=">=3.5",
+      install_requires=[],
+      extras_require={
+              "TEST": ["pytest", "coverage", "simplejson"],
+              "JSON": ["simplejson"],
+          },
       zip_safe=False
       )
