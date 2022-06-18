@@ -1,1 +1,8 @@
+
+[JSON]
+simplejson
+
+[TEST]
 pytest
+coverage
+simplejson

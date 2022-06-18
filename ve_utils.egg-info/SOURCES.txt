@@ -4,10 +4,12 @@ README.md
 setup.py
 dist/ve-utils-1.1.0.tar.gz
 test/__init__.py
+test/test_ujson.py
 test/test_usys.py
 test/test_utime.py
 test/test_utype.py
 ve_utils/__init__.py
+ve_utils/ujson.py
 ve_utils/usys.py
 ve_utils/utime.py
 ve_utils/utype.py
