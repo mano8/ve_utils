@@ -10,8 +10,10 @@ from ve_utils.utype import UType as Ut
 
 class TestUType:
     """UTime unittest class."""
-    def test_has_valid_length(self):
-        """Test has_valid_length method"""
+
+    @staticmethod
+    def test_has_valid_length():
+        """Test has_valid_length method."""
         assert Ut.has_valid_length(test=True, value='tst')
         assert Ut.has_valid_length(test=True, value='tst', not_null=True)
         assert Ut.has_valid_length(test=True, value='tst', mini=1, maxi=3)
@@ -41,8 +43,9 @@ class TestUType:
         with pytest.raises(TypeError):
             assert Ut.has_valid_length(test=True, value=None, not_null=True)
 
-    def test_has_valid_value(self):
-        """Test has_valid_value method"""
+    @staticmethod
+    def test_has_valid_value():
+        """Test has_valid_value method."""
         assert Ut.has_valid_value(test=True, value=1)
         assert Ut.has_valid_value(test=True, value=-2, not_null=True)
         assert Ut.has_valid_value(test=True, value=1, mini=1, maxi=3)
@@ -82,8 +85,9 @@ class TestUType:
         with pytest.raises(TypeError):
             assert Ut.has_valid_value(test=True, value=None, maxi=2)
 
-    def test_is_str(self):
-        """Test is_str method"""
+    @staticmethod
+    def test_is_str():
+        """Test is_str method."""
         datas = [
             '_hy', 'hy', "#hj_58 Hyufdgdfi#", "hj_58Hyui", "",  # true
             -1, True, dict(), list(), None  # false
@@ -103,8 +107,9 @@ class TestUType:
         tests = [x for x in datas if Ut.is_valid_format(value=x, data_type=str)]
         assert len(tests) == 5
 
-    def test_is_bool(self):
-        """Test is_bool method"""
+    @staticmethod
+    def test_is_bool():
+        """Test is_bool method."""
         datas = [
             True, False,  # true
             0, 1, "hello", dict(), list()  # false
@@ -118,8 +123,9 @@ class TestUType:
         tests = [x for x in datas if Ut.is_valid_format(x, data_type=bool)]
         assert len(tests) == 2
 
-    def test_is_int(self):
-        """Test is_int method"""
+    @staticmethod
+    def test_is_int():
+        """Test is_int method."""
         datas = [
             0, 0x235, -999999999999999999999999999999999999999999999999999999, 5,
             -2, -6, True, False,  # true
@@ -143,8 +149,9 @@ class TestUType:
         tests = [x for x in datas if Ut.is_valid_format(x, data_type='int')]
         assert len(tests) == 8
 
-    def test_is_float(self):
-        """Test is_float method"""
+    @staticmethod
+    def test_is_float():
+        """Test is_float method."""
         datas = [
             0.0, -100.1, -999999999999999999999999999999999999999999999999999999.2,  # true
             5.1, -2.6, -6.5,
@@ -168,8 +175,9 @@ class TestUType:
         tests = [x for x in datas if Ut.is_valid_format(x, data_type='float')]
         assert len(tests) == 6
 
-    def test_is_numeric(self):
-        """Test is_numeric method"""
+    @staticmethod
+    def test_is_numeric():
+        """Test is_numeric method."""
         datas = [
             0, 0x235, -999999999999999999999999999999999999999999999999999999, 5,  # true
             -2, -6, True, False,  # true
@@ -195,8 +203,9 @@ class TestUType:
         tests = [x for x in datas if Ut.is_valid_format(x, data_type='numeric')]
         assert len(tests) == 14
 
-    def test_is_dict(self):
-        """Test is_dict method"""
+    @staticmethod
+    def test_is_dict():
+        """Test is_dict method."""
         datas = [
             dict(), {0: "0", 1: "1", 2: "2", 3: "3"}, {"a": "0", "b": "0"}, {(1, 0): "0"},  # true
             0.0, 1.1, "hello", tuple(), list()  # false
@@ -220,8 +229,9 @@ class TestUType:
         tests = [x for x in datas if Ut.is_valid_format(x, data_type='dict')]
         assert len(tests) == 4
 
-    def test_is_tuple(self):
-        """"""
+    @staticmethod
+    def test_is_tuple():
+        """Test is_tuple method."""
         datas = [
             tuple(), (0, 1, 2), (0, 1, 2, 3), ('a', 'b'),  # true
             0.0, 1.1, "hello", list(), dict()  # false
@@ -242,8 +252,9 @@ class TestUType:
         tests = [x for x in datas if Ut.is_valid_format(x, data_type='tuple')]
         assert len(tests) == 4
 
-    def test_is_list(self):
-        """Test is_list method"""
+    @staticmethod
+    def test_is_list():
+        """Test is_list method."""
         datas = [
             list(), [0, 1, 2, 3, 4], [1, "0"], [(1, 0), "0"],  # true
             0.0, 1.1, "hello", tuple(), dict()  # false
@@ -261,43 +272,49 @@ class TestUType:
         tests = [x for x in datas if Ut.is_valid_format(x, data_type='list')]
         assert len(tests) == 4
 
-    def test_is_valid_format(self):
-        """Test is_valid_format method"""
+    @staticmethod
+    def test_is_valid_format():
+        """Test is_valid_format method."""
         with pytest.raises(AttributeError):
             Ut.is_valid_format({}, data_type="bad data type")
         assert Ut.is_list(Ut.get_valid_data_types_test())
 
-    def test_get_int(self):
-        """Test get_int method"""
+    @staticmethod
+    def test_get_int():
+        """Test get_int method."""
         assert Ut.get_int("hello", 0) == 0
         assert Ut.get_int(0.1) == 0
         assert Ut.get_int("bg", 2) == 2
         assert Ut.get_int(True) == 1
         assert Ut.get_int([]) == 0
 
-    def test_get_float(self):
-        """Test get_float method"""
+    @staticmethod
+    def test_get_float():
+        """Test get_float method."""
         assert Ut.get_float("hello", 0.0) == 0.0
         assert Ut.get_float(0.1) == 0.1
         assert Ut.get_float("bg", 2.5) == 2.5
         assert Ut.get_float(True) == 1.0
         assert Ut.get_float([]) == 0.0
 
-    def test_get_rounded_float(self):
-        """Test get_rounded_float method"""
+    @staticmethod
+    def test_get_rounded_float():
+        """Test get_rounded_float method."""
         assert Ut.get_rounded_float("hello", 1, 0.156) == 0.0
         assert Ut.get_rounded_float(0.1665616, 3) == 0.167
         assert Ut.get_rounded_float("bg", 2, 2.589898) == 0.0
         assert Ut.get_rounded_float(None, dict(), None) is None
 
-    def test_get_str(self):
-        """Test get_str method"""
+    @staticmethod
+    def test_get_str():
+        """Test get_str method."""
         assert Ut.get_str("hello") == "hello"
         assert Ut.get_str(0.1665616) == "0.1665616"
         assert Ut.get_str(10) == "10"
-    
-    def test_format_by_type(self):
-        """Test format_by_type method"""
+
+    @staticmethod
+    def test_format_by_type():
+        """Test format_by_type method."""
         assert Ut.format_by_type("32", 'int') == 32
         assert Ut.format_by_type("32", 'float') == 32.0
         assert Ut.format_by_type(32, 'str') == '32'
@@ -312,8 +329,9 @@ class TestUType:
         with pytest.raises(AttributeError):
             Ut.format_by_type({}, data_type="bad data type")
 
-    def test_int_to_formatted_string(self):
-        """Test int_to_formatted_string method"""
+    @staticmethod
+    def test_int_to_formatted_string():
+        """Test int_to_formatted_string method."""
         assert Ut.int_to_formatted_string(0) == "00"
         assert Ut.int_to_formatted_string(5) == "05"
         assert Ut.int_to_formatted_string(10) == "10"
@@ -321,8 +339,9 @@ class TestUType:
         assert Ut.int_to_formatted_string("bad") is None
         assert Ut.int_to_formatted_string("bad", False) is False
 
-    def test_str_to_bool(self):
-        """Test str_to_bool method"""
+    @staticmethod
+    def test_str_to_bool():
+        """Test str_to_bool method."""
         assert Ut.str_to_bool("true")
         assert Ut.str_to_bool("1")
         assert Ut.str_to_bool("On")
@@ -337,47 +356,55 @@ class TestUType:
         assert not Ut.str_to_bool(False)
         assert Ut.str_to_bool(None, None) is None
 
-    def test_bool_to_int_text(self):
-        """Test bool_to_int_text method"""
+    @staticmethod
+    def test_bool_to_int_text():
+        """Test bool_to_int_text method."""
         assert Ut.bool_to_int_text(True) == "1"
         assert Ut.bool_to_int_text(False) == "0"
 
-    def test_bool_to_on_off(self):
-        """Test bool_to_on_off method"""
+    @staticmethod
+    def test_bool_to_on_off():
+        """Test bool_to_on_off method."""
         assert Ut.bool_to_on_off(True) == "On"
         assert Ut.bool_to_on_off(False) == "Off"
 
-    def test_bool_to_str_state(self):
-        """Test bool_to_str_state method"""
+    @staticmethod
+    def test_bool_to_str_state():
+        """Test bool_to_str_state method."""
         assert Ut.bool_to_str_state(True) == "Ok"
         assert Ut.bool_to_str_state(False) == "Error"
 
-    def test_string_to_int_bool(self):
-        """Test string_to_int_bool method"""
+    @staticmethod
+    def test_string_to_int_bool():
+        """Test string_to_int_bool method."""
         assert Ut.string_to_int_bool(True) == 1
         assert Ut.string_to_int_bool(False) == 0
 
-    def test_string_to_float(self):
-        """Test string_to_float method"""
+    @staticmethod
+    def test_string_to_float():
+        """Test string_to_float method."""
         assert Ut.string_to_float('0,125') == 0.125
         assert Ut.string_to_float('0.125') == 0.125
         assert Ut.string_to_float(0.125) == 0.125
         assert Ut.string_to_float(None, None) is None
 
-    def test_init_dict(self):
-        """Test init_dict method"""
+    @staticmethod
+    def test_init_dict():
+        """Test init_dict method."""
         assert Ut.init_dict('0,125') == dict()
         assert Ut.init_dict({'a': 0}) == {'a': 0}
 
-    def test_init_dict_key(self):
-        """Test init_dict_key method"""
+    @staticmethod
+    def test_init_dict_key():
+        """Test init_dict_key method."""
         assert Ut.init_dict_key(dict(), 'my_key', list()) == {'my_key': list()}
         assert Ut.init_dict_key(dict(), 'my_key', dict()) == {'my_key': dict()}
         with pytest.raises(ValueError):
             assert Ut.init_dict_key(dict(), None, dict())
 
-    def test_get_items_from_dict(self):
-        """Test init_dict_key method"""
+    @staticmethod
+    def test_get_items_from_dict():
+        """Test init_dict_key method."""
         data = {
             'a': 0, 'b': 1, 'c': 2
         }

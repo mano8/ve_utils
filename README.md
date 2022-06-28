@@ -1,28 +1,37 @@
 # ve-utils
+
 [![CircleCI](https://circleci.com/gh/mano8/ve_utils.svg?style=svg)](https://app.circleci.com/pipelines/github/mano8/ve_utils)
 [![PyPI package](https://img.shields.io/pypi/v/ve_utils.svg)](https://pypi.org/project/ve_utils/)
 [![codecov](https://codecov.io/gh/mano8/ve_utils/branch/master/graph/badge.svg?token=ADZ070QHDR)](https://codecov.io/gh/mano8/ve_utils)   
 
 This is a Python utilities helper. 
 
-# Installation
+## Installation
 
 #### Install from PyPi :
+
 You can install the ve_utils helper from PyPI:
 
-``pip install ve_utils``
+```plaintext
+$ pip install ve_utils
+```
 
 #### Install from GitHub repository :
+
 To install directly from GitHub:
 
-``$ python3 -m pip install "git+https://github.com/mano8/ve_utils"``
+```plaintext
+$ python3 -m pip install "git+https://github.com/mano8/ve_utils"
+```
 
 # How to use
 
 ### UType :
 import package :
 
-``from ve_utils.utype import UType as Ut``
+```plaintext
+from ve_utils.utype import UType as Ut
+```
 
 #### Test format :
 Example for is_list method:
