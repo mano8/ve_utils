@@ -69,7 +69,10 @@ class UType:
 
         if not test:
             return False
-        elif not not_null and mini is None and maxi is None:
+        elif not not_null\
+                and eq is None\
+                and mini is None\
+                and maxi is None:
             return True
         else:
             val_len = len(value)
