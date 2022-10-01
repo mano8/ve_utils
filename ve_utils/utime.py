@@ -211,6 +211,7 @@ class PerfStats:
 
     def init_perf_key(self, key: str, reset: bool = False):
         """Init perf key."""
+        self.init_perf()
         if not self.has_perf_key(key) or reset is True:
             self.perf[key] = {
                 "start": 0.0,
