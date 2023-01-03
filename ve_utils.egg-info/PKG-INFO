@@ -1,12 +1,11 @@
 Metadata-Version: 2.1
 Name: ve-utils
-Version: 2.5.2
+Version: 2.5.3
 Summary: Utilities helper library for Python
 Home-page: https://github.com/mano8/ve_utils
 Author: Eli Serra
 Author-email: eli.serra173@gmail.com
 License: MIT
-Platform: UNKNOWN
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Programming Language :: Python :: 3
 Classifier: Programming Language :: Python :: 3.7
@@ -96,5 +95,3 @@ Example for is_int method:
 
 The methods ```is_int, is_float and is_numeric ``` takes the sames arguments.
 ``is_numeric`` method allow to work with float and int instances.
-
-

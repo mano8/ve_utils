@@ -8,7 +8,7 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 
 setup(name='ve_utils',
-      version='2.5.2',
+      version='2.5.3',
       description='Utilities helper library for Python',
       long_description=README,
       long_description_content_type="text/markdown",
