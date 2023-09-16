@@ -3,8 +3,8 @@
 [![CircleCI](https://circleci.com/gh/mano8/ve_utils.svg?style=svg)](https://app.circleci.com/pipelines/github/mano8/ve_utils)
 [![PyPI package](https://img.shields.io/pypi/v/ve_utils.svg)](https://pypi.org/project/ve_utils/)
 [![codecov](https://codecov.io/gh/mano8/ve_utils/branch/master/graph/badge.svg?token=ADZ070QHDR)](https://codecov.io/gh/mano8/ve_utils)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d5241461e15b492e9008ba87b3d24a3a)](https://www.codacy.com/gh/mano8/ve_utils/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mano8/ve_utils&amp;utm_campaign=Badge_Grade)  
-[![Downloads](https://static.pepy.tech/badge/ve_utils)](https://pepy.tech/project/ve_utils).
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d5241461e15b492e9008ba87b3d24a3a)](https://www.codacy.com/gh/mano8/ve_utils/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mano8/ve_utils&amp;utm_campaign=Badge_Grade)
+[![Downloads](https://static.pepy.tech/badge/ve_utils)](https://pepy.tech/project/ve_utils).   
 
 This is a Python utilities helper. 
 
